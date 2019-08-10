@@ -29,7 +29,7 @@ class Ball {
         this.ySpeed += gravity * deltaS;
         this.y += this.ySpeed * deltaS;
     }
-    jump = () => this.ySpeed = jumpSpeed;
+    jump() { this.ySpeed = jumpSpeed; }
     think(tube) {
         const output = activationFunction([this.y, this.ySpeed, tube.x, tube.botY]
             .map((v, i) => activationFunction(v * this.dna.weights[i]))
@@ -52,7 +52,7 @@ class Tube {
         this.topY = Math.random() * canvasHeight / 2;
         this.botY = this.topY + spotHeight;
     }
-    update = deltaS => this.x += xSpeed * deltaS;
+    update(deltaS) { this.x += xSpeed * deltaS; }
     draw() {
         ctx.rect(this.x, 0, tubeWidth, this.topY);
         ctx.rect(this.x, this.botY, tubeWidth, canvasHeight);
