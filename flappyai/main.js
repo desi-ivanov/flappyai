@@ -7,7 +7,7 @@ const canvasWidth = 800,
     spotHeight = 150,
     tubeWidth = 50,
     ballRadius = 15,
-    ballsPerEpoch = prompt("Balls per epoch? (eg. 1000)"),
+    ballsPerEpoch = 1000, //prompt("Balls per epoch? (eg. 1000)"),
     canvas = document.createElement("canvas");
 canvas.setAttribute("width", canvasWidth);
 canvas.setAttribute("height", canvasHeight);
