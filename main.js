@@ -7,7 +7,7 @@ const canvasWidth = 800,
     spotHeight = 150,
     tubeWidth = 50,
     ballRadius = 15,
-    ballsPerEpoch = 1000, //prompt("Balls per epoch? (eg. 1000)"),
+    ballsPerEpoch = 1000,
     canvas = document.createElement("canvas");
 canvas.setAttribute("width", canvasWidth);
 canvas.setAttribute("height", canvasHeight);
@@ -15,7 +15,6 @@ document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 const randomVal = () => (Math.random() * 2) - 1;
 const randomArr = l => Array.from({ length: l }).map(randomVal);
-const activationFunction = x => 2 / (1 + Math.E ** (-2 * x)) - 1;
 class Ball {
     constructor(bias = randomVal(), weights = randomArr(4), evolutionRate = 1) {
         this.y = canvasHeight / 2;
@@ -31,10 +30,10 @@ class Ball {
     }
     jump() { this.ySpeed = jumpSpeed; }
     think(tube) {
-        const output = activationFunction([this.y, this.ySpeed, tube.x, tube.botY]
-            .map((v, i) => activationFunction(v * this.dna.weights[i]))
-            .reduce((a, v) => a + v * this.dna.bias, 0));
-        if(output >= 0) this.jump();
+        const output = [this.y, this.ySpeed, tube.x, tube.botY]
+            .map((v, i) => v * this.dna.weights[i])
+            .reduce((a, v) => a + v, 0) +  this.dna.bias;
+        if(Math.tanh(output) > 0.9) this.jump();
     }
     draw() {
         ctx.beginPath();
